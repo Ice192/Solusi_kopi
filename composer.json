@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8.2",
+        "ext-gd": "*",
         "bensampo/laravel-enum": "^6.12",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
@@ -71,6 +72,9 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "platform": {
+            "php": "8.5.3"
         }
     },
     "minimum-stability": "stable",
