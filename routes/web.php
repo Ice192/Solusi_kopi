@@ -94,10 +94,10 @@ require __DIR__ . '/auth.php';
 
 Route::prefix('auth')->name('auth.')->group(function () {
     Route::get('google', [SocialLoginController::class, 'redirectToGoogle'])->name('google');
-    Route::get('google/callback', [SocialLoginController::class, 'handleGoogleCallback']);
+    Route::get('google/callback', [SocialLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
     Route::get('facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('facebook');
-    Route::get('facebook/callback', [SocialLoginController::class, 'handleFacebookCallback']);
+    Route::get('facebook/callback', [SocialLoginController::class, 'handleFacebookCallback'])->name('facebook.callback');
 });
 
 // ==================================================
@@ -118,13 +118,13 @@ Route::prefix('order')->name('order.')->group(function () {
 });
 
 // Route untuk logout dan clear session
-Route::post('/logout', function() {
+Route::post('/logout-clear', function() {
     Auth::logout();
     session()->invalidate();
     session()->regenerateToken();
     session()->flush();
     return redirect()->route('welcome');
-})->name('logout');
+})->name('logout.clear');
 
 Route::post('/clear-session', function() {
     session()->flush();
@@ -137,7 +137,7 @@ Route::post('/clear-session', function() {
 Route::prefix('order')->group(function () {
     Route::get('/payment/{order}', function (Order $order) {
         if ($order->payment_status === 'paid') {
-            return redirect()->route('order.success', $order)->with('info', 'Pesanan sudah dibayar.');
+            return redirect()->route('order.success.sim', $order)->with('info', 'Pesanan sudah dibayar.');
         }
         return view('order.payment_qris', compact('order'));
     })->name('order.payment');
@@ -154,11 +154,11 @@ Route::prefix('order')->group(function () {
             'paid_at' => now(),
         ]);
 
-        return redirect()->route('order.success', $order)->with('success', 'Pembayaran berhasil dikonfirmasi!');
-    })->name('order.payment.confirm');
+        return redirect()->route('order.success.sim', $order)->with('success', 'Pembayaran berhasil dikonfirmasi!');
+    })->name('order.payment.sim.confirm');
 
-    // success fallback route (already defined above as named route, but this is backup)
-    Route::get('/success/{order}', [OrderController::class, 'orderSuccess'])->name('order.success');
+    // Dedicated success route for simulation flow
+    Route::get('/success/sim/{order}', [OrderController::class, 'orderSuccess'])->name('order.success.sim');
 });
 
 Route::get('/console/reporting/export-summary', [\App\Http\Controllers\Console\ReportingController::class, 'exportSummary'])->name('console.reporting.exportSummary');
