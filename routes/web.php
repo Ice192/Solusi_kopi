@@ -135,30 +135,27 @@ Route::post('/clear-session', function() {
 // ✅ Simulasi QRIS POS (Dev/Test Only?)
 // ==================================================
 Route::prefix('order')->group(function () {
-    Route::get('/payment/{order}', function (Order $order) {
+    Route::match(['get', 'post'], '/payment/{order}', function (Order $order) {
+        if (request()->isMethod('post')) {
+            $order->update(['payment_status' => 'paid', 'status' => 'preparing']);
+
+            Payment::create([
+                'order_id' => $order->id,
+                'amount' => $order->total_amount,
+                'method' => $order->payment_method,
+                'status' => 'completed',
+                'payment_gateway_ref' => 'QRIS_SIM_' . Str::upper(Str::random(8)),
+                'paid_at' => now(),
+            ]);
+
+            return redirect()->route('order.success', $order->order_number)->with('success', 'Pembayaran berhasil dikonfirmasi!');
+        }
+
         if ($order->payment_status === 'paid') {
-            return redirect()->route('order.success.sim', $order)->with('info', 'Pesanan sudah dibayar.');
+            return redirect()->route('order.success', $order->order_number)->with('info', 'Pesanan sudah dibayar.');
         }
         return view('order.payment_qris', compact('order'));
     })->name('order.payment');
-
-    Route::post('/payment/{order}/confirm', function (Order $order) {
-        $order->update(['payment_status' => 'paid', 'status' => 'preparing']);
-
-        Payment::create([
-            'order_id' => $order->id,
-            'amount' => $order->total_amount,
-            'method' => $order->payment_method,
-            'status' => 'completed',
-            'payment_gateway_ref' => 'QRIS_SIM_' . Str::upper(Str::random(8)),
-            'paid_at' => now(),
-        ]);
-
-        return redirect()->route('order.success.sim', $order)->with('success', 'Pembayaran berhasil dikonfirmasi!');
-    })->name('order.payment.sim.confirm');
-
-    // Dedicated success route for simulation flow
-    Route::get('/success/sim/{order}', [OrderController::class, 'orderSuccess'])->name('order.success.sim');
 });
 
 Route::get('/console/reporting/export-summary', [\App\Http\Controllers\Console\ReportingController::class, 'exportSummary'])->name('console.reporting.exportSummary');

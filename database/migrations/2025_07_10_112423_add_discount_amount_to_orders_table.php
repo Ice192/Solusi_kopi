@@ -10,12 +10,16 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+{
+    if (Schema::hasTable('orders') && 
+        !Schema::hasColumn('orders', 'discount_amount')) {
+
         Schema::table('orders', function (Blueprint $table) {
-            $table->decimal('discount_amount', 10, 2)->default(0)->after('subtotal');
+            $table->decimal('discount_amount', 10, 2)
+                  ->default(0);
         });
     }
-
+}
     /**
      * Reverse the migrations.
      */
