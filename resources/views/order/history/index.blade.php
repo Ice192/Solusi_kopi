@@ -42,18 +42,18 @@
                                             @endif
                                         </div>
                                         <div class="text-end">
-                                            <div class="badge bg-label-{{
+                                            <span class="badge mb-1 bg-label-{{
                                                 $order->status === 'completed' ? 'success' :
                                                 ($order->status === 'cancelled' ? 'danger' :
                                                 ($order->status === 'served' ? 'info' :
                                                 ($order->status === 'ready' ? 'secondary' :
                                                 ($order->status === 'preparing' ? 'warning' : 'primary'))))
-                                            }} mb-1">
-                                                {{ $statusOrderIndo[$order->status] ?? ucfirst($order->status) }}
-                                            </div>
+                                            }}">
+                                                {{ $statuses[$order->status] ?? ucfirst($order->status) }}
+                                            </span>
                                             <br>
-                                            <small class="text-muted">
-                                                {{ $statusBayarIndo[$order->payment_status] ?? ucfirst($order->payment_status) }}
+                                            <small class="badge bg-label-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">
+                                                {{ $paymentStatuses[$order->payment_status] ?? ucfirst($order->payment_status) }}
                                             </small>
                                         </div>
                                     </a>

@@ -98,7 +98,10 @@ class OrderController extends Controller
             $orders = collect();
         }
 
-        return view('order.history.index', compact('orders'));
+        $statuses = Order::getStatuses();
+        $paymentStatuses = Order::getPaymentStatuses();
+
+        return view('order.history.index', compact('orders', 'statuses', 'paymentStatuses'));
     }
 
     /**
@@ -110,7 +113,10 @@ class OrderController extends Controller
                       ->with(['outlet', 'table', 'orderItems.product', 'promotion', 'payments'])
                       ->firstOrFail();
 
-        return view('order.history.show', compact('order'));
+        $statuses = Order::getStatuses();
+        $paymentStatuses = Order::getPaymentStatuses();
+
+        return view('order.history.show', compact('order', 'statuses', 'paymentStatuses'));
     }
 
     /**
@@ -335,11 +341,10 @@ class OrderController extends Controller
                       ->with(['outlet', 'table', 'orderItems.product', 'promotion'])
                       ->firstOrFail();
 
-        $order->update([
-            'payment_status' => 'paid',
-        ]);
+        $statuses = Order::getStatuses();
+        $paymentStatuses = Order::getPaymentStatuses();
 
-        return view('order.success', compact('order'));
+        return view('order.success', compact('order', 'statuses', 'paymentStatuses'));
     }
 
     /**

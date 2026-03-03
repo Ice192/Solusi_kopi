@@ -160,3 +160,5 @@ Route::prefix('order')->group(function () {
     // success fallback route (already defined above as named route, but this is backup)
     Route::get('/success/{order}', [OrderController::class, 'orderSuccess'])->name('order.success');
 });
+
+Route::get('/console/reporting/export-summary', [\App\Http\Controllers\Console\ReportingController::class, 'exportSummary'])->name('console.reporting.exportSummary');

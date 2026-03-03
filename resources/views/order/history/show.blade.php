@@ -21,7 +21,7 @@
                                         ($order->status === 'ready' ? 'secondary' :
                                         ($order->status === 'preparing' ? 'warning' : 'primary'))))
                                     }}">
-                                        {{ $statusOrderIndo[$order->status] ?? ucfirst($order->status) }}
+                                        {{ $statuses[$order->status] ?? ucfirst($order->status) }}
                                     </span>
                                 </p>
                                 <p><strong>Catatan:</strong> {{ $order->note ?? '-' }}</p>
@@ -49,7 +49,9 @@
                                     <div class="border-bottom pb-2 mb-2">
                                         <p><strong>Metode:</strong> {{ $payment->method }}</p>
                                         <p><strong>Jumlah:</strong> Rp {{ number_format($payment->amount, 2, ',', '.') }}</p>
-                                        <p><strong>Status:</strong> <span class="badge bg-label-{{ $payment->status === 'completed' ? 'success' : 'warning' }}">{{ ucfirst($payment->status) }}</span></p>
+                                        <p><strong>Status:</strong> <span class="badge bg-label-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">
+                                            {{ $paymentStatuses[$order->payment_status] ?? ucfirst($order->payment_status) }}
+                                        </span></p>
                                         @if($payment->paid_at)
                                             <p><strong>Waktu Bayar:</strong> {{ $payment->paid_at->format('d F Y, H:i') }}</p>
                                         @endif

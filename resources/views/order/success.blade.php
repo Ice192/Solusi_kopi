@@ -76,12 +76,19 @@
                     <span>Status Pesanan</span>
                     <span class="badge bg-label-{{
                         $order->status === 'completed' ? 'success' :
-                        ($order->status === 'cancelled' ? 'danger' : 'warning')
-                    }}">{{ $statusOrderIndo[$order->status] ?? ucfirst($order->status) }}</span>
+                        ($order->status === 'cancelled' ? 'danger' :
+                        ($order->status === 'served' ? 'info' :
+                        ($order->status === 'ready' ? 'secondary' :
+                        ($order->status === 'preparing' ? 'warning' : 'primary'))))
+                    }}">
+                        {{ $statuses[$order->status] ?? ucfirst($order->status) }}
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>Status Pembayaran</span>
-                    <span class="badge bg-label-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">{{ $statusBayarIndo[$order->payment_status] ?? ucfirst($order->payment_status) }}</span>
+                    <span class="badge bg-label-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">
+                        {{ $paymentStatuses[$order->payment_status] ?? ucfirst($order->payment_status) }}
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>Metode Pembayaran</span>
