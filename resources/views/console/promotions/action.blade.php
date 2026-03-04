@@ -7,7 +7,7 @@
 
     {{-- Tombol Delete (gunakan JS listener) --}}
     <a href="javascript:;"
-       class="btn btn-sm btn-icon rounded-pill waves-effect delete-record"
+       class="btn btn-sm btn-icon btn-text-danger rounded-pill waves-effect delete-record"
        data-id="{{ $id }}"
        data-url="{{ route('promotions.destroy', $id) }}"
        data-bs-toggle="tooltip"
