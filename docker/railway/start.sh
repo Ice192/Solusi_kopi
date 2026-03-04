@@ -19,7 +19,7 @@ if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
   php artisan migrate --force
 fi
 
-if [ "${RUN_SEEDERS:-true}" = "true" ]; then
+if [ "${RUN_SEEDERS:-false}" = "true" ]; then
   php artisan db:seed --force
 fi
 
