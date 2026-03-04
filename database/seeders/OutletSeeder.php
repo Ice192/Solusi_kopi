@@ -13,6 +13,17 @@ class OutletSeeder extends Seeder
      */
     public function run(): void
     {
-        Outlet::factory(1)->create();
+        Outlet::updateOrCreate(
+            ['email' => 'outlet01@solusikopi.local'],
+            [
+                'name' => 'Solusi Kopi Main Outlet',
+                'address' => 'Jl. Utama No. 1',
+                'phone' => '081234567801',
+                'opening_hours' => '08:00 - 22:00',
+                'latitude' => '-5.147665',
+                'longitude' => '119.432732',
+                'logo' => null,
+            ]
+        );
     }
 }
