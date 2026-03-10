@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Console;
 
 use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RequestStoreCategory;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,7 @@ class CategoriesController extends Controller
         return view('console.categories.create');
     }
 
-    public function store(RequestStoreCategory $request)
+    public function store(StoreCategoryRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -46,7 +47,7 @@ class CategoriesController extends Controller
         return view('console.categories.edit', compact('category'));
     }
 
-    public function update(RequestStoreCategory $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         DB::beginTransaction();
         try {
