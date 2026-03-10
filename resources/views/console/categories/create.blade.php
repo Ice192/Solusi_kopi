@@ -11,9 +11,20 @@
                 <h5 class="mb-0">Form Tambah Kategori</h5>
             </div>
             <div class="card-body">
+                @php($defaultOutletId = old('outlet_id', $outlets->first()->id ?? null))
+
+                @if (!$defaultOutletId)
+                    <div class="alert alert-danger" role="alert">
+                        Outlet belum tersedia. Tambahkan outlet terlebih dahulu sebelum membuat kategori.
+                    </div>
+                @endif
+
                 <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="outlet_id" value="{{ 1 }}">
+                    <input type="hidden" name="outlet_id" value="{{ $defaultOutletId }}">
+                    @error('outlet_id')
+                        <div class="text-danger small mb-3">{{ $message }}</div>
+                    @enderror
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Kategori</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -51,7 +62,7 @@
                         @enderror
                     </div>
                     <a href="{{ route('categories.index') }}" class="btn btn-secondary me-2">Batal</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary" {{ !$defaultOutletId ? 'disabled' : '' }}>Simpan</button>
                 </form>
             </div>
         </div>
