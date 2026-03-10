@@ -66,11 +66,11 @@ class OutletDataTable extends DataTable
 
         // Konfigurasi tombol
         $buttons = [
-            // [
-            //     'text' => '<i class="ri-add-line me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Outlet</span>',
-            //     'className' => 'add-new btn btn-primary mb-5 mb-md-0 me-3 waves-effect waves-light',
-            //     'action' => 'function (e, dt, node, config) { window.location = "' . route('outlets.create') . '"; }'
-            // ],
+            [
+                'text' => '<i class="ri-add-line me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Outlet</span>',
+                'className' => 'add-new btn btn-primary mb-5 mb-md-0 me-3 waves-effect waves-light',
+                'action' => 'function (e, dt, node, config) { window.location = "' . route('outlets.create') . '"; }'
+            ],
             [
                 'text' => '<i class="ri-refresh-line me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Muat Ulang</span>',
                 'className' => 'btn btn-secondary mb-5 mb-md-0 waves-effect waves-light',
