@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h5 class="mb-0">Daftar Kategori</h5>
-                {{-- <a href="{{ route('categories.create') }}" class="btn btn-primary">Tambah Kategori</a> --}}
+                <a href="{{ route('categories.create') }}" class="btn btn-primary">Tambah Kategori</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive text-nowrap">
